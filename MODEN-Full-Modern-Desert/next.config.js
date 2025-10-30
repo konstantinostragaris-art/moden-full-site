@@ -1,2 +1,8 @@
 /** @type {import('next').NextConfig} */
-module.exports = { experimental:{ typedRoutes:true } }
+const nextConfig = {
+  experimental: {
+    typedRoutes: false,
+  },
+};
+
+module.exports = nextConfig;
