@@ -1,29 +1,26 @@
-import type { Metadata } from 'next';
-import './globals.css';
+// app/en/layout.tsx
+import type { Metadata } from "next";
+import "../globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://moden-full-site.vercel.app'),
+  metadataBase: new URL("https://moden-full-site.vercel.app"),
   title: {
-    default: 'MODEN Development | Luxury Meets Sustainability',
-    template: '%s | MODEN Development',
+    default: "MODEN Development — Luxury Meets Sustainability",
+    template: "%s | MODEN Development",
   },
   description:
-    'Σχεδιάζουμε και αναπτύσσουμε σύγχρονες κατοικίες υψηλής αισθητικής, με καθαρή αρχιτεκτονική γραμμή, ποιότητα υλικών και net-zero φιλοσοφία. Luxury Meets Sustainability.',
+    "Modern minimal luxury homes with a net-zero mindset. Design • Build • Renovate.",
   openGraph: {
-    title: 'MODEN Development',
+    title: "MODEN Development",
     description:
-      'Luxury Meets Sustainability — Σύγχρονες, ενεργειακά αποδοτικές κατοικίες.',
-    url: 'https://moden-full-site.vercel.app',
-    siteName: 'MODEN Development',
-    images: ['/og.jpg'],
-    locale: 'el_GR',
-    type: 'website',
+      "Luxury Meets Sustainability — Modern, energy-efficient residences.",
+    url: "https://moden-full-site.vercel.app/en",
+    siteName: "MODEN Development",
+    images: ["/og.jpg"],
+    locale: "en_US",
+    type: "website",
   },
-  icons: {
-    icon: '/icon.png',             // αν το έχεις ανεβάσει
-    // shortcut: '/favicon.ico',    // βάλε αν έχεις favicon.ico
-    // apple: '/apple-icon.png',    // βάλε αν έχεις apple icon
-  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
@@ -32,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="el">
+    <html lang="en">
       <body className="min-h-screen">{children}</body>
     </html>
   );
