@@ -1,20 +1,28 @@
 import type { Metadata } from 'next';
-import '../globals.css';
+import './globals.css';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://moden-full-site.vercel.app/en'),
-  title: 'MODEN Development | Luxury Meets Sustainability',
+  metadataBase: new URL('https://moden-full-site.vercel.app'),
+  title: {
+    default: 'MODEN Development | Luxury Meets Sustainability',
+    template: '%s | MODEN Development',
+  },
   description:
-    'We design and develop modern luxury homes with timeless architecture and net-zero philosophy. Luxury Meets Sustainability.',
+    'Σχεδιάζουμε και αναπτύσσουμε σύγχρονες κατοικίες υψηλής αισθητικής, με καθαρή αρχιτεκτονική γραμμή, ποιότητα υλικών και net-zero φιλοσοφία. Luxury Meets Sustainability.',
   openGraph: {
     title: 'MODEN Development',
     description:
-      'Luxury Meets Sustainability — Modern, energy-efficient residences.',
-    url: 'https://moden-full-site.vercel.app/en',
+      'Luxury Meets Sustainability — Σύγχρονες, ενεργειακά αποδοτικές κατοικίες.',
+    url: 'https://moden-full-site.vercel.app',
     siteName: 'MODEN Development',
     images: ['/og.jpg'],
-    locale: 'en_US',
+    locale: 'el_GR',
     type: 'website',
+  },
+  icons: {
+    icon: '/icon.png',             // αν το έχεις ανεβάσει
+    // shortcut: '/favicon.ico',    // βάλε αν έχεις favicon.ico
+    // apple: '/apple-icon.png',    // βάλε αν έχεις apple icon
   },
 };
 
@@ -24,8 +32,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="el">
+      <body className="min-h-screen">{children}</body>
     </html>
   );
 }
