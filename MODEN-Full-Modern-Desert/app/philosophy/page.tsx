@@ -1,0 +1,4 @@
+import Nav from '@/components/Nav'
+import Section from '@/components/Section'
+export const metadata={title:'Φιλοσοφία — MODEN Development'}
+export default function Page(){return (<div><Nav lang='el'/><Section className='py-14'><h1 className='text-3xl sm:text-4xl font-semibold mb-8'>Φιλοσοφία</h1><div className='grid lg:grid-cols-2 gap-8'><div className='card p-6'><h3 className='text-xl font-medium'>Luxury Meets Sustainability</h3><p className='mt-3 text-neutral-700'>Σχεδιάζουμε με ισορροπία αισθητικής και ευθύνης. Υλικά χαμηλού αποτυπώματος, ενεργειακές λύσεις υψηλής απόδοσης και καθαρή αρχιτεκτονική γραμμή.</p></div><div className='card p-6'><h3 className='text-xl font-medium'>Net‑zero σκέψη</h3><p className='mt-3 text-neutral-700'>Ενσωματώνουμε HVAC υψηλής απόδοσης, φωτοβολταϊκά, θερμοπρόσοψη και smart controls — με στόχους A+/nZEB.</p></div></div></Section></div>) }

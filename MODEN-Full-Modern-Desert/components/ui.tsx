@@ -1,0 +1,2 @@
+import { clsx } from 'clsx'
+export function Button({children,className='',variant='primary',...props}:any){const base='btn';const map:any={primary:'btn-primary',outline:'btn-outline'};return <button className={[base,map[variant],className].join(' ')} {...props}>{children}</button>}
