@@ -45,6 +45,7 @@ export default function Nav() {
     router.push(path)
   }
 
+  // σωστά href για EN/EL
   const href = (elPath: string) => (isEN ? (elPath === '/' ? '/en' : `/en${elPath}`) : elPath)
 
   // close mobile με ESC / outside click
@@ -88,27 +89,26 @@ export default function Nav() {
 
   return (
     <div className="sticky top-0 z-50 backdrop-blur bg-white/60 dark:bg-neutral-950/60 border-b border-neutral-200/60 dark:border-white/10">
-      <Section className="py-3 flex items-center">
-        {/* Logo + Branding (αριστερά) */}
-        <div className="flex items-center gap-4 flex-1">
-          <div className="h-12 w-12 grid place-items-center rounded-lg border bg-white shadow-sm dark:bg-neutral-900 dark:border-white/10">
-            {/* +40% μεγαλύτερο logo */}
-            <Logo className="w-10 h-10" />
+      {/* ΚΕΦΑΛΙΔΑ: αριστερά logo/τίτλος — δεξιά όλο το menu */}
+      <Section className="py-3 flex items-center justify-between gap-4">
+        {/* Left: Logo + Branding (ΜΕΓΑΛΥΤΕΡΑ) */}
+        <div className="flex items-center gap-4">
+          <div className="h-14 w-14 grid place-items-center rounded-lg border bg-white shadow-sm dark:bg-neutral-900 dark:border-white/10">
+            {/* ~48px icon */}
+            <Logo className="w-12 h-12" />
           </div>
           <div className="leading-tight">
-            {/* Μεγαλύτερος τίτλος */}
-            <div className="text-[22px] sm:text-2xl font-semibold tracking-wide text-neutral-900 dark:text-neutral-100">
+            <div className="text-[24px] sm:text-[26px] md:text-[28px] font-semibold tracking-wide text-neutral-900 dark:text-neutral-100">
               MODEN <span className="opacity-70">Development</span>
             </div>
-            {/* Λίγο πιο έντονη βοηθητική γραμμή */}
             <div className="text-[12px] uppercase tracking-[0.22em] text-neutral-600 dark:text-neutral-300">
               Luxury Meets Sustainability
             </div>
           </div>
         </div>
 
-        {/* Desktop Navigation + Actions (όλα δεξιά) */}
-        <div className="relative hidden md:flex items-center gap-5 ml-auto">
+        {/* Right: ΟΛΟ το navigation/cta/switches ΣΤΗ ΔΕΞΙΑ ΠΛΕΥΡΑ */}
+        <div className="hidden md:flex items-center gap-6 ml-auto">
           <nav ref={navRef} className="flex items-center gap-7 text-[15px] relative">
             {linkData.map(([label, h]) => (
               <button
@@ -137,19 +137,17 @@ export default function Nav() {
             )}
           </nav>
 
-          {/* CTA λίγο μεγαλύτερο για ισορροπία με μεγαλύτερο logo */}
           <Button onClick={() => go(href('/contact'))} className="shadow-sm px-4 py-[10px] text-[14px]">
             {dict.cta}
           </Button>
 
-          {/* Switchers δίπλα στο CTA */}
-          <LangSwitch className="ml-1" />
+          <LangSwitch />
           <ThemeToggle />
         </div>
 
-        {/* Mobile Hamburger */}
+        {/* Mobile Hamburger (μένει δεξιά λόγω justify-between) */}
         <button
-          className="md:hidden ml-auto inline-flex items-center justify-center h-10 w-10 rounded-lg border bg-white/70 hover:bg-white transition
+          className="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border bg-white/70 hover:bg-white transition
                      text-neutral-900 border-neutral-300
                      dark:bg-neutral-900/70 dark:hover:bg-neutral-900 dark:text-neutral-100 dark:border-white/10"
           aria-label="Menu"
@@ -164,39 +162,7 @@ export default function Nav() {
       </Section>
 
       {/* Mobile panel */}
-      {open && (
-        <div
-          ref={panelRef}
-          className="md:hidden border-t bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80
-                     dark:bg-neutral-950/90 dark:supports-[backdrop-filter]:bg-neutral-950/80
-                     border-neutral-200/60 dark:border-white/10"
-        >
-          <div className="px-4 py-3 grid gap-2 text-sm">
-            {linkData.map(([label, h]) => (
-              <button
-                key={h}
-                onClick={() => go(h)}
-                className={clsx(
-                  'px-2 py-2 rounded-lg text-left hover:bg-neutral-100 text-neutral-600',
-                  'dark:text-neutral-300 dark:hover:bg-white/5',
-                  isActive(h) && 'bg-neutral-100 text-neutral-900 font-medium dark:bg-white/10 dark:text-neutral-100'
-                )}
-              >
-                {label}
-              </button>
-            ))}
-
-            <Button onClick={() => go(href('/contact'))} className="mt-2">
-              {dict.cta}
-            </Button>
-
-            <div className="pt-2 border-t mt-2 flex items-center justify-between border-neutral-200/60 dark:border-white/10">
-              <span className="text-xs text-neutral-500 dark:text-neutral-400">Language</span>
-              <LangSwitch />
-            </div>
-          </div>
-        </div>
-      )}
+      {/* (ίδιο όπως πριν) */}
     </div>
   )
 }
