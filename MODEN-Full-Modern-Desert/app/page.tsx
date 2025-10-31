@@ -99,29 +99,31 @@ export default function Page() {
 
       {/* Φιλοσοφία — ΠΑΝΩ από τα Έργα */}
       <Section id="philosophy" className="py-20">
-        <h2 className="text-3xl sm:text-4xl font-semibold mb-6">Φιλοσοφία</h2>
-        <div className="grid lg:grid-cols-3 gap-6">
-          {[
-            ['Luxury', 'Αισθητική που αντέχει στο χρόνο.'],
-            ['Sustainability', 'Υλικά με χαμηλό αποτύπωμα.'],
-            ['Design', 'Καθαρή αρχιτεκτονική.'],
-          ].map(([k, v], i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.05 }}
-              className="card p-6"
-            >
-              <div className="text-xl font-medium">{k}</div>
-              <div className="text-neutral-600 dark:text-neutral-300 mt-2">
-                {v}
-              </div>
-            </motion.div>
-          ))}
+  <h2 className="text-3xl sm:text-4xl font-semibold mb-6">Φιλοσοφία</h2>
+  <div className="grid lg:grid-cols-3 gap-6">
+    {[
+      ['Luxury', 'Αισθητική που αντέχει στο χρόνο.'],
+      ['Sustainability', 'Υλικά με χαμηλό αποτύπωμα.'],
+      ['Design', 'Καθαρή αρχιτεκτονική.'],
+    ].map(([k, v], i) => (
+      <motion.div
+        key={i}
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: i * 0.05 }}
+        className="card p-6 bg-[var(--brass)]/20 text-neutral-900 dark:text-neutral-100 hover:bg-[var(--brass)]/25 transition-colors"
+      >
+        <div className="text-xl font-semibold text-[var(--brass)]">
+          {k}
         </div>
-      </Section>
+        <div className="text-neutral-900 dark:text-neutral-200 mt-2">
+          {v}
+        </div>
+      </motion.div>
+    ))}
+  </div>
+</Section>
 
       {/* Έργα */}
       <Section id="projects" className="py-20">
