@@ -1,16 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: { typedRoutes: false },
-  i18n: {
-    locales: ['el', 'en'],
-    defaultLocale: 'el',
-    localeDetection: true,
+  experimental: {
+    typedRoutes: false,
   },
-  async redirects() {
-    return [
-      { source: '/el', destination: '/', permanent: true },
-      { source: '/el/:path*', destination: '/:path*', permanent: true },
-    ];
+  i18n: {
+    locales: ['el', 'en'], // Ελληνικά & Αγγλικά
+    defaultLocale: 'el',   // Ελληνικά ως default
+    localeDetection: true, // Προαιρετικά: αναγνωρίζει γλώσσα browser
   },
 };
 
