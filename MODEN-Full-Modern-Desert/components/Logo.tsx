@@ -1,1 +1,19 @@
-export default function Logo({className=''}:{className?:string}){return (<svg viewBox='0 0 48 48' className={className} aria-label='MODEN logo'><path d='M8 22 L24 10 L40 22 L40 40 L28 40 L28 26 L20 26 L20 40 L8 40 Z' fill='none' stroke='#A7835D' strokeWidth='2.4' strokeLinejoin='round'/><path d='M16 34 L16 22 L20 22 L24 26 L28 22 L32 22 L32 34' fill='none' stroke='#A7835D' strokeWidth='2.4' strokeLinecap='round' strokeLinejoin='round'/><path d='M36 14 C38 14 41 15.5 41 18 C38.5 18 37 15 36 14 Z' fill='#A7835D'/></svg>) }
+'use client'
+import Image from 'next/image'
+import { useTheme } from 'next-themes'
+
+export default function Logo({ className }: { className?: string }) {
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === 'dark'
+
+  return (
+    <Image
+      src={isDark ? '/logo-dark.png' : '/logo-light.png'}
+      alt="MODEN Development Logo"
+      width={120}
+      height={120}
+      priority
+      className={className}
+    />
+  )
+}
