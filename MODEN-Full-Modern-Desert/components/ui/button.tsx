@@ -1,15 +1,20 @@
 'use client'
+import * as React from 'react'
 import clsx from 'clsx'
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  asChild?: boolean
   variant?: 'solid' | 'outline' | 'ghost'
   size?: 'sm' | 'md' | 'lg'
+  children?: React.ReactNode
 }
 
 export function Button({
+  asChild = false,
   variant = 'solid',
   size = 'md',
   className,
+  children,
   ...props
 }: ButtonProps) {
   const base =
@@ -21,7 +26,7 @@ export function Button({
     sm: 'h-9 px-3 text-sm',
     md: 'h-10 px-4 text-sm',
     lg: 'h-11 px-5 text-base',
-  }
+  } as const
 
   const variants = {
     // Light: μαύρο, Dark: λευκό — πάντα full contrast
@@ -29,7 +34,7 @@ export function Button({
       'bg-neutral-900 text-white hover:bg-neutral-800 ' +
       'dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200',
 
-    // FIX: στο dark δίνουμε text-neutral-200 + border-white/20 + hover bg-white/10
+    // Στο dark: text-neutral-200 + border-white/20 + hover bg-white/10
     outline:
       'bg-transparent border border-neutral-300 text-neutral-700 hover:bg-neutral-100 ' +
       'dark:border-white/20 dark:text-neutral-200 dark:hover:bg-white/10',
@@ -40,10 +45,20 @@ export function Button({
       'dark:text-neutral-200 dark:hover:bg-white/10',
   } as const
 
+  const classes = clsx(base, sizes[size], variants[variant], className)
+
+  // Αν asChild=true και το child είναι π.χ. <a> ή <Link>, κλωνοποίησέ το και πέρασε className
+  if (asChild && React.isValidElement(children)) {
+    return React.cloneElement(children as React.ReactElement<any>, {
+      className: clsx(classes, (children as any).props?.className),
+    })
+  }
+
+  // default: <button>
   return (
-    <button
-      {...props}
-      className={clsx(base, sizes[size], variants[variant], className)}
-    />
+    <button className={classes} {...props}>
+      {children}
+    </button>
   )
 }
+
