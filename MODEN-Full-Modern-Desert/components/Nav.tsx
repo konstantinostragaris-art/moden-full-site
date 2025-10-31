@@ -91,9 +91,9 @@ export default function Nav() {
     <div className="sticky top-0 z-50 backdrop-blur bg-white/60 dark:bg-neutral-950/60 border-b border-neutral-200/60 dark:border-white/10">
       <Section className="py-3 flex items-center justify-between">
         {/* Logo + Branding */}
-        <div className="flex items-center gap-3">
-          <div className="h-9 w-9 grid place-items-center rounded-lg border bg-white shadow-sm dark:bg-neutral-900 dark:border-white/10">
-            <Logo className="w-7 h-7" />
+        <div className="flex items-center gap-4">
+          <div className="h-12 w-12 grid place-items-center rounded-lg border bg-white shadow-sm dark:bg-neutral-900 dark:border-white/10">
+            <Logo className="w-10 h-10" />
           </div>
           <div className="leading-tight">
             <div className="text-xl tracking-wide text-neutral-900 dark:text-neutral-100">
