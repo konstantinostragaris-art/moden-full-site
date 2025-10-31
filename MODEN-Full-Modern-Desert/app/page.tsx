@@ -1,5 +1,5 @@
 'use client'
-
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Section from '@/components/Section'
 import Nav from '@/components/Nav'
@@ -78,10 +78,18 @@ export default function Page() {
               transition={{ delay: 0.1, duration: 0.6 }}
             >
               <div className="relative rounded-3xl overflow-hidden border bg-white dark:bg-neutral-900 shadow-soft">
-                <div className="aspect-[4/3] grid place-items-center bg-gradient-to-br from-desert-beige via-white to-desert-sand text-neutral-500 dark:from-neutral-800 dark:via-neutral-900 dark:to-neutral-950">
-                  {/* Μπορείς αργότερα να βάλεις next/image εδώ */}
-                  Προσωρινή εικόνα
-                </div>
+               <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-md border dark:border-white/10">
+  <Image
+    src="/1897+Lilac+Ln-44.jpg.webp"
+    alt="Minimal luxury villa by MODEN Development"
+    fill
+    priority
+    sizes="(max-width: 768px) 100vw, 50vw"
+    className="object-cover object-center"
+  />
+  {/* Προαιρετικό ελαφρύ gradient overlay για βάθος */}
+  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+</div>
                 {/* Αφαιρέθηκε το παλιό gradient footer/overlay */}
               </div>
             </motion.div>
