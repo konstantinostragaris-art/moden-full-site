@@ -1,8 +1,8 @@
 @tailwind base;@tailwind components;@tailwind utilities; :root{--bg:#F3E9DF;--ink:#1C1B1A;--brass:#A7835D} html,body{background:var(--bg);color:var(--ink)} .container{width:100%;max-width:80rem;margin-inline:auto;padding-inline:1rem}@media(min-width:640px){.container{padding-inline:1.5rem}}@media(min-width:1024px){.container{padding-inline:2rem}} .card{background:rgba(255,255,255,0.9);border:1px solid #e5e5e5;border-radius:1.25rem;box-shadow:0 10px 30px rgba(0,0,0,0.08)} .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:1rem;border:1px solid #222;padding:.5rem 1rem;font-size:.9rem;transition:.2s} .btn-primary{background:#111;color:#fff;border-color:#111} .btn-outline{background:transparent;color:#111;border-color:#ccc} .btn-outline:hover{background:#fff} .grad-title{background-image:linear-gradient(135deg,#A7835D,#D8C1A3 60%,#3A332B 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}/* Smooth theme fade transition */
 html {
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition: background-color 0.7s ease, color 0.7s ease;
 }
 
 body, div, section, header, footer, nav {
-  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+  transition: background-color 0.7s ease, color 0.7s ease, border-color 0.7s ease;
 }
