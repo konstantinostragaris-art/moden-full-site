@@ -10,6 +10,13 @@ export const metadata: Metadata = {
   },
   description:
     "Modern minimal luxury homes with a net-zero mindset. Design • Build • Renovate.",
+  alternates: {
+    canonical: "/en",
+    languages: {
+      "el-GR": "/",
+      "en-US": "/en",
+    },
+  },
   openGraph: {
     title: "MODEN Development",
     description:
@@ -29,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen">{children}</body>
     </html>
   );
