@@ -1,28 +1,41 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import clsx from 'clsx'
 
-export default function LangSwitch() {
+export default function LangSwitch({ className }: { className?: string }) {
   const pathname = usePathname() || '/'
 
-  // αφαίρεσε το /en στην αρχή (αν υπάρχει)
+  // αφαίρεσε το /en μόνο αν είναι στην αρχή του path
   const base = pathname.replace(/^\/en(?=\/|$)/, '') || '/'
 
-  const toEL = base                      // π.χ. /projects
+  const isEN = pathname.startsWith('/en')
+  const toEL = base                               // π.χ. /projects
   const toEN = base === '/' ? '/en' : `/en${base}` // π.χ. /en/projects
 
   return (
-    <div className="flex items-center gap-2 text-sm">
+    <div className={clsx('flex items-center gap-1', className)}>
       <Link
         href={toEL}
-        className={pathname.startsWith('/en') ? 'opacity-80 hover:opacity-100' : 'font-semibold'}
+        className={clsx(
+          'px-3 py-1 rounded-full text-xs border transition',
+          isEN
+            ? 'opacity-80 hover:opacity-100 border-neutral-400/40'
+            : 'font-medium border-neutral-400/40 bg-white/5'
+        )}
+        aria-current={!isEN ? 'true' : 'false'}
       >
         EL
       </Link>
-      <span className="opacity-40">/</span>
       <Link
         href={toEN}
-        className={!pathname.startsWith('/en') ? 'opacity-80 hover:opacity-100' : 'font-semibold'}
+        className={clsx(
+          'px-3 py-1 rounded-full text-xs border transition',
+          isEN
+            ? 'font-medium border-neutral-400/40 bg-white/5'
+            : 'opacity-80 hover:opacity-100 border-neutral-400/40'
+        )}
+        aria-current={isEN ? 'true' : 'false'}
       >
         EN
       </Link>
