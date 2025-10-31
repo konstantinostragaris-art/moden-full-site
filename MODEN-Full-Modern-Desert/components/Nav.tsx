@@ -1,4 +1,6 @@
 'use client'
+import  LangSwitch from '@/components/LangSwitch'
+
 import ThemeToggle from '@/components/ThemeToggle'
 
 import { useState, useEffect, useRef } from 'react'
@@ -109,6 +111,7 @@ export default function Nav({ lang = 'el' }: { lang?: 'el' | 'en' }) {
             </div>
             <div className="text-[11px] uppercase tracking-[0.18em] text-neutral-600 dark:text-neutral-300">
               Luxury Meets Sustainability
+           <LangSwitch />
             </div>
           </div>
         </div>
