@@ -6,34 +6,37 @@ const locales = ['el', 'en'] as const
 const defaultLocale = 'el'
 
 export function middleware(request: NextRequest) {
-  const { pathname, searchParams } = request.nextUrl
+  const { pathname } = request.nextUrl
 
-  // 1) Αν υπάρχει ήδη locale στο path (/el ή /en), δεν πειράζουμε τίποτα
+  // A. Αν το path έχει ήδη locale (/en ή /el), δεν κάνουμε τίποτα
   const hasLocale = locales.some((l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`))
   if (hasLocale) return
 
-  // 2) Redirect ΜΟΝΟ από την αρχική "/"
+  // B. Redirect ΜΟΝΟ από την αρχική "/"
   if (pathname !== '/') return
 
-  // 3) Αν ο χρήστης έχει προτίμηση σε cookie, σεβόμαστε αυτήν
+  // C. Αν υπάρχει cookie προτίμησης, το σεβόμαστε (και ΜΟΝΟ αυτό)
   const pref = request.cookies.get('prefLocale')?.value
-  if (pref && locales.includes(pref as any) && pref !== defaultLocale) {
+  if (pref === 'en') {
     const url = request.nextUrl.clone()
-    url.pathname = `/${pref}`
+    url.pathname = '/en'
     return NextResponse.redirect(url)
   }
+  if (pref === 'el') {
+    // μείνε στο ελληνικό "/"
+    return
+  }
 
-  // 4) Αλλιώς, ρίξε μια ματιά στη γλώσσα browser
+  // D. Πρώτη επίσκεψη χωρίς cookie: ρίξε μια ματιά στη γλώσσα browser
   const acceptLang = request.headers.get('accept-language') || ''
   const browserLang = acceptLang.split(',')[0]?.split('-')[0] || defaultLocale
-
   if (browserLang === 'en') {
     const url = request.nextUrl.clone()
-    url.pathname = `/en`
+    url.pathname = '/en'
     return NextResponse.redirect(url)
   }
 
-  // default: μείνε στο ελληνικό "/"
+  // default: ελληνικά
   return
 }
 
@@ -42,3 +45,4 @@ export const config = {
     '/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)',
   ],
 }
+
