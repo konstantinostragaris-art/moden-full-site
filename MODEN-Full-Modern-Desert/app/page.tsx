@@ -1,63 +1,77 @@
 'use client'
-import Hero from '@/components/Hero'
+
 import { motion } from 'framer-motion'
 import Section from '@/components/Section'
 import Nav from '@/components/Nav'
 import { Button } from '@/components/ui'
 
 export default function Page() {
-  return (
-    
-    <div className="min-h-screen">
-      <Hero />
-      <Nav  />
+  // helpers για smooth scroll
+  const scrollToId = (id: string) => {
+    const el = document.getElementById(id)
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
-      {/* Hero */}
-      <div className="relative overflow-hidden">
+  return (
+    <div className="min-h-screen">
+      {/* Sticky header */}
+      <Nav />
+
+      {/* Hero (ΧΩΡΙΣ background overlay/λευκό κείμενο εκτός περιοχής) */}
+      <section
+        aria-labelledby="home-title"
+        className="relative overflow-hidden"
+      >
+        {/* Διακριτικό decorative background (όχι έντονο) */}
         <div
-          className="absolute inset-0 -z-10"
+          className="pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
-              'radial-gradient(circle at top left, rgba(167,131,93,0.18), transparent 40%), radial-gradient(circle at bottom right, rgba(0,0,0,0.08), transparent 35%)',
+              'radial-gradient(circle at 10% 10%, rgba(167,131,93,0.12), transparent 35%), radial-gradient(circle at 90% 85%, rgba(0,0,0,0.06), transparent 30%)',
           }}
         />
-        <Section className="pt-16 pb-20">
+
+        {/* Περισσότερο top padding ώστε να μη «σκιάζει» ο sticky header */}
+        <Section className="pt-24 md:pt-28 pb-20">
           <div className="grid lg:grid-cols-2 gap-10 items-center">
+            {/* Αριστερά: τίτλος/περιγραφή/CTA */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight">
+              <h1
+                id="home-title"
+                className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight"
+              >
                 Σύγχρονες κατοικίες με{' '}
-                <span className="block mt-2 grad-title">διαχρονική πολυτέλεια</span> και καθαρό
-                αποτύπωμα.
+                <span className="block mt-2 grad-title">
+                  διαχρονική πολυτέλεια
+                </span>{' '}
+                και καθαρό αποτύπωμα.
               </h1>
+
               <p className="mt-6 text-lg text-neutral-700 dark:text-neutral-300 max-w-xl">
-                Η MODEN αναπτύσσει και εκσυγχρονίζει βιώσιμες βίλες, μεζονέτες και διαμερίσματα.
-                Minimal αισθητική, premium υλικά και λύσεις net-zero.
+                Η MODEN αναπτύσσει και εκσυγχρονίζει βιώσιμες βίλες, μεζονέτες
+                και διαμερίσματα. Minimal αισθητική, premium υλικά και λύσεις
+                net-zero.
               </p>
 
               {/* Κουμπιά: πρώτα Φιλοσοφία, μετά Έργα */}
               <div className="mt-8 flex flex-wrap gap-3">
-                <Button
-                  onClick={() =>
-                    document.getElementById('philosophy')?.scrollIntoView({ behavior: 'smooth' })
-                  }
-                >
+                <Button onClick={() => scrollToId('philosophy')}>
                   Φιλοσοφία
                 </Button>
                 <Button
                   variant="outline"
-                  onClick={() =>
-                    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
-                  }
+                  onClick={() => scrollToId('projects')}
                 >
                   Δες Έργα
                 </Button>
               </div>
             </motion.div>
 
+            {/* Δεξιά: κάρτα προεπισκόπησης (χωρίς overlay/λευκά κείμενα) */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -65,17 +79,15 @@ export default function Page() {
             >
               <div className="relative rounded-3xl overflow-hidden border bg-white dark:bg-neutral-900 shadow-soft">
                 <div className="aspect-[4/3] grid place-items-center bg-gradient-to-br from-desert-beige via-white to-desert-sand text-neutral-500 dark:from-neutral-800 dark:via-neutral-900 dark:to-neutral-950">
-                  Hero Image — stock
+                  {/* Μπορείς αργότερα να βάλεις next/image εδώ */}
+                  Προσωρινή εικόνα
                 </div>
-                <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/60 to-transparent text-white">
-                  <div className="text-sm uppercase tracking-widest text-white/80">Case Study</div>
-                  <div className="text-xl font-medium">Nordic Luxe Villa — A+</div>
-                </div>
+                {/* Αφαιρέθηκε το παλιό gradient footer/overlay */}
               </div>
             </motion.div>
           </div>
         </Section>
-      </div>
+      </section>
 
       {/* Φιλοσοφία — ΠΑΝΩ από τα Έργα */}
       <Section id="philosophy" className="py-20">
@@ -95,19 +107,21 @@ export default function Page() {
               className="card p-6"
             >
               <div className="text-xl font-medium">{k}</div>
-              <div className="text-neutral-600 dark:text-neutral-300 mt-2">{v}</div>
+              <div className="text-neutral-600 dark:text-neutral-300 mt-2">
+                {v}
+              </div>
             </motion.div>
           ))}
         </div>
       </Section>
 
-      {/* Έργα — τώρα κάτω από τη Φιλοσοφία */}
+      {/* Έργα */}
       <Section id="projects" className="py-20">
         <div className="flex items-end justify-between mb-10">
           <h2 className="text-3xl sm:text-4xl font-semibold">Έργα</h2>
           <Button
             variant="outline"
-            onClick={() => location.assign('/projects')}
+            onClick={() => (location.href = '/projects')}
             className="gap-2"
           >
             Περισσότερα
@@ -115,7 +129,11 @@ export default function Page() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {['Modern Desert Villa', 'Ocean Stone Residence', 'Black & Brass Loft'].map((t, i) => (
+          {[
+            'Modern Desert Villa',
+            'Ocean Stone Residence',
+            'Black & Brass Loft',
+          ].map((t, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 16 }}
@@ -129,7 +147,9 @@ export default function Page() {
               </div>
               <div className="p-5">
                 <div className="text-lg font-medium">{t}</div>
-                <div className="text-sm text-neutral-500 dark:text-neutral-400">Coming soon</div>
+                <div className="text-sm text-neutral-500 dark:text-neutral-400">
+                  Coming soon
+                </div>
               </div>
             </motion.div>
           ))}
@@ -142,14 +162,19 @@ export default function Page() {
           <div>
             <h2 className="text-3xl sm:text-4xl font-semibold">Επικοινωνία</h2>
             <p className="mt-6 text-neutral-700 dark:text-neutral-300 max-w-xl">
-              Στείλε μας λίγες γραμμές για το project σου και θα επανέλθουμε με ιδέες και προτάσεις.
+              Στείλε μας λίγες γραμμές για το project σου και θα επανέλθουμε με
+              ιδέες και προτάσεις.
             </p>
             <div className="mt-6 text-sm text-neutral-600 dark:text-neutral-400">
               Email: info@modendevelopment.gr
             </div>
           </div>
 
-          <form action="/api/contact" method="POST" className="card p-6 grid gap-4">
+          <form
+            action="/api/contact"
+            method="POST"
+            className="card p-6 grid gap-4"
+          >
             <div className="grid sm:grid-cols-2 gap-4">
               <input
                 name="name"
@@ -171,7 +196,7 @@ export default function Page() {
               placeholder="Πες μας δυο λόγια για το project σου"
               className="rounded-xl border px-3 py-2 outline-none focus:ring-2 focus:ring-[var(--brass)] bg-white dark:bg-neutral-900 dark:border-white/10"
               required
-            ></textarea>
+            />
             <Button>Αποστολή</Button>
           </form>
         </div>
@@ -182,13 +207,22 @@ export default function Page() {
         <Section className="py-8 text-sm text-neutral-600 dark:text-neutral-400 flex flex-col md:flex-row items-center justify-between gap-3">
           <div>© 2025 MODEN Development — Luxury Meets Sustainability</div>
           <div className="flex items-center gap-4">
-            <a className="hover:text-neutral-900 dark:hover:text-neutral-200" href="/philosophy">
+            <a
+              className="hover:text-neutral-900 dark:hover:text-neutral-200"
+              href="/philosophy"
+            >
               Philosophy
             </a>
-            <a className="hover:text-neutral-900 dark:hover:text-neutral-200" href="/projects">
+            <a
+              className="hover:text-neutral-900 dark:hover:text-neutral-200"
+              href="/projects"
+            >
               Projects
             </a>
-            <a className="hover:text-neutral-900 dark:hover:text-neutral-200" href="/contact">
+            <a
+              className="hover:text-neutral-900 dark:hover:text-neutral-200"
+              href="/contact"
+            >
               Contact
             </a>
           </div>
