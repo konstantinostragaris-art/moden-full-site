@@ -10,8 +10,8 @@ export default function Logo({ className }: { className?: string }) {
     <Image
       src={isDark ? '/logo-dark.png' : '/logo-light.png'}
       alt="MODEN Development Logo"
-      width={180}
-      height={180}
+      width={120}
+      height={120}
       priority
       className={className}
     />
