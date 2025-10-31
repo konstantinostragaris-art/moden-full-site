@@ -9,7 +9,7 @@ export const metadata = {
 export default function Page() {
   return (
     <div>
-      <Nav lang="en" />
+      <Nav  />
 
       <Section className="py-14">
         <h1 className="text-3xl sm:text-4xl font-semibold mb-8">Philosophy</h1>
