@@ -45,7 +45,6 @@ export default function Nav() {
     router.push(path)
   }
 
-  // helper που φτιάχνει σωστά τα href ανάλογα με locale
   const href = (elPath: string) => (isEN ? (elPath === '/' ? '/en' : `/en${elPath}`) : elPath)
 
   // close mobile με ESC / outside click
@@ -89,25 +88,28 @@ export default function Nav() {
 
   return (
     <div className="sticky top-0 z-50 backdrop-blur bg-white/60 dark:bg-neutral-950/60 border-b border-neutral-200/60 dark:border-white/10">
-      <Section className="py-3 flex items-center justify-between">
-        {/* Logo + Branding */}
-        <div className="flex items-center gap-4">
+      <Section className="py-3 flex items-center">
+        {/* Logo + Branding (αριστερά) */}
+        <div className="flex items-center gap-4 flex-1">
           <div className="h-12 w-12 grid place-items-center rounded-lg border bg-white shadow-sm dark:bg-neutral-900 dark:border-white/10">
+            {/* +40% μεγαλύτερο logo */}
             <Logo className="w-10 h-10" />
           </div>
           <div className="leading-tight">
-            <div className="text-xl tracking-wide text-neutral-900 dark:text-neutral-100">
+            {/* Μεγαλύτερος τίτλος */}
+            <div className="text-[22px] sm:text-2xl font-semibold tracking-wide text-neutral-900 dark:text-neutral-100">
               MODEN <span className="opacity-70">Development</span>
             </div>
-            <div className="text-[11px] uppercase tracking-[0.18em] text-neutral-600 dark:text-neutral-300">
+            {/* Λίγο πιο έντονη βοηθητική γραμμή */}
+            <div className="text-[12px] uppercase tracking-[0.22em] text-neutral-600 dark:text-neutral-300">
               Luxury Meets Sustainability
             </div>
           </div>
         </div>
 
-        {/* Desktop Navigation + Actions */}
-        <div className="relative hidden md:flex items-center gap-3">
-          <nav ref={navRef} className="flex items-center gap-6 text-sm relative">
+        {/* Desktop Navigation + Actions (όλα δεξιά) */}
+        <div className="relative hidden md:flex items-center gap-5 ml-auto">
+          <nav ref={navRef} className="flex items-center gap-7 text-[15px] relative">
             {linkData.map(([label, h]) => (
               <button
                 key={h}
@@ -135,20 +137,19 @@ export default function Nav() {
             )}
           </nav>
 
-          {/* CTA */}
-          <Button onClick={() => go(href('/contact'))} className="shadow-sm">
+          {/* CTA λίγο μεγαλύτερο για ισορροπία με μεγαλύτερο logo */}
+          <Button onClick={() => go(href('/contact'))} className="shadow-sm px-4 py-[10px] text-[14px]">
             {dict.cta}
           </Button>
 
-          {/* ΜΟΝΟ αυτός ο switcher (δίπλα στο CTA) */}
-          <LangSwitch className="ml-2" />
-
+          {/* Switchers δίπλα στο CTA */}
+          <LangSwitch className="ml-1" />
           <ThemeToggle />
         </div>
 
         {/* Mobile Hamburger */}
         <button
-          className="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-lg border bg-white/70 hover:bg-white transition
+          className="md:hidden ml-auto inline-flex items-center justify-center h-10 w-10 rounded-lg border bg-white/70 hover:bg-white transition
                      text-neutral-900 border-neutral-300
                      dark:bg-neutral-900/70 dark:hover:bg-neutral-900 dark:text-neutral-100 dark:border-white/10"
           aria-label="Menu"
