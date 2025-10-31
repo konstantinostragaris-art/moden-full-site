@@ -7,7 +7,7 @@ import { Button } from '@/components/ui'
 export default function Page() {
   return (
     <div className="min-h-screen">
-      <Nav lang="el" />
+      <Nav  />
 
       {/* Hero */}
       <div className="relative overflow-hidden">
