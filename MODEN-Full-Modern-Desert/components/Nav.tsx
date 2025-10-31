@@ -45,13 +45,17 @@ export default function Nav({ lang = 'el' }: { lang?: 'el' | 'en' }) {
   }
 
   // κρατάει το τρέχον route στο language switch
-  const switchLang = () => {
-    const current = pathname || '/'
-    const isEnglish = current.startsWith('/en')
-    const target = isEnglish ? current.replace(/^\/en/, '') || '/' : `/en${current}`
-    setOpen(false)
-    router.push(target)
-  }
+ const switchLang = () => {
+  const current = pathname || '/'
+  const isEnglish = current.startsWith('/en')
+  const target = isEnglish ? current.replace(/^\/en/, '') || '/' : `/en${current}`
+
+  // αποθήκευση προτίμησης για 180 μέρες
+  document.cookie = `prefLocale=${isEnglish ? 'el' : 'en'}; path=/; max-age=${60*60*24*180}; SameSite=Lax`
+  setOpen(false)
+  router.push(target)
+}
+
 
   // close mobile με ESC / outside click
   useEffect(() => {
