@@ -1,25 +1,39 @@
+// middleware.ts
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-const locales = ['el', 'en']
+const locales = ['el', 'en'] as const
 const defaultLocale = 'el'
 
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
-  const pathnameHasLocale = locales.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
-  )
-  if (pathnameHasLocale) return
+  const { pathname, searchParams } = request.nextUrl
 
-  const acceptLang = request.headers.get('accept-language') || ''
-  const browserLang = acceptLang.split(',')[0].split('-')[0]
+  // 1) Αν υπάρχει ήδη locale στο path (/el ή /en), δεν πειράζουμε τίποτα
+  const hasLocale = locales.some((l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`))
+  if (hasLocale) return
 
-  if (locales.includes(browserLang) && browserLang !== defaultLocale) {
+  // 2) Redirect ΜΟΝΟ από την αρχική "/"
+  if (pathname !== '/') return
+
+  // 3) Αν ο χρήστης έχει προτίμηση σε cookie, σεβόμαστε αυτήν
+  const pref = request.cookies.get('prefLocale')?.value
+  if (pref && locales.includes(pref as any) && pref !== defaultLocale) {
     const url = request.nextUrl.clone()
-    url.pathname = `/${browserLang}${pathname}`
+    url.pathname = `/${pref}`
     return NextResponse.redirect(url)
   }
 
+  // 4) Αλλιώς, ρίξε μια ματιά στη γλώσσα browser
+  const acceptLang = request.headers.get('accept-language') || ''
+  const browserLang = acceptLang.split(',')[0]?.split('-')[0] || defaultLocale
+
+  if (browserLang === 'en') {
+    const url = request.nextUrl.clone()
+    url.pathname = `/en`
+    return NextResponse.redirect(url)
+  }
+
+  // default: μείνε στο ελληνικό "/"
   return
 }
 
