@@ -10,6 +10,13 @@ export const metadata: Metadata = {
   },
   description:
     "Σύγχρονες κατοικίες με διαχρονική πολυτέλεια και καθαρό αποτύπωμα.",
+  alternates: {
+    canonical: "/",
+    languages: {
+      "el-GR": "/",
+      "en-US": "/en",
+    },
+  },
   openGraph: {
     title: "MODEN Development",
     description:
