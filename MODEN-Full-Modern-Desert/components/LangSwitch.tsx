@@ -1,22 +1,27 @@
 'use client'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import clsx from 'clsx'
 
 export default function LangSwitch({ className }: { className?: string }) {
+  const router = useRouter()
   const pathname = usePathname() || '/'
 
-  // αφαίρεσε το /en μόνο αν είναι στην αρχή του path
+  // Βρες τη “βάση” του path (χωρίς /en prefix)
   const base = pathname.replace(/^\/en(?=\/|$)/, '') || '/'
-
   const isEN = pathname.startsWith('/en')
-  const toEL = base                               // π.χ. /projects
+
+  const toEL = base                          // π.χ. /projects
   const toEN = base === '/' ? '/en' : `/en${base}` // π.χ. /en/projects
+
+  const go = (href: string) => {
+    if (href !== pathname) router.push(href)
+  }
 
   return (
     <div className={clsx('flex items-center gap-1', className)}>
-      <Link
-        href={toEL}
+      <button
+        type="button"
+        onClick={() => go(toEL)}
         className={clsx(
           'px-3 py-1 rounded-full text-xs border transition',
           isEN
@@ -26,9 +31,10 @@ export default function LangSwitch({ className }: { className?: string }) {
         aria-current={!isEN ? 'true' : 'false'}
       >
         EL
-      </Link>
-      <Link
-        href={toEN}
+      </button>
+      <button
+        type="button"
+        onClick={() => go(toEN)}
         className={clsx(
           'px-3 py-1 rounded-full text-xs border transition',
           isEN
@@ -38,7 +44,7 @@ export default function LangSwitch({ className }: { className?: string }) {
         aria-current={isEN ? 'true' : 'false'}
       >
         EN
-      </Link>
+      </button>
     </div>
   )
 }
