@@ -1,4 +1,5 @@
 'use client'
+import ThemeToggle from '@/components/ThemeToggle'
 
 import { useState, useEffect, useRef } from 'react'
 import Section from '@/components/Section'
