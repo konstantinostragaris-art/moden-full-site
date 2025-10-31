@@ -2,10 +2,9 @@
 
 import { motion } from 'framer-motion'
 import Nav from '@/components/Nav'
-import { Button } from '@/components/ui/button'
+import Section from '@/components/Section'
+import { Button } from '@/components/ui'
 import { ArrowRight } from 'lucide-react'
-
-// English version: Philosophy section appears ABOVE Projects
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -43,7 +42,7 @@ export default function Page() {
             </h1>
             <p className="mt-6 text-lg text-neutral-600 max-w-2xl">
               MODEN Development — Luxury Meets Sustainability. High‑efficiency homes blending architectural clarity,
-              timeless materials, and refined detailing.
+              timeless materials and refined detailing.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg">
@@ -71,123 +70,114 @@ export default function Page() {
         </div>
       </header>
 
-      {/* Philosophy – moved ABOVE Projects */}
-      <section id="philosophy" className="py-16 sm:py-20">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={fadeUp}>
-            <div className="max-w-2xl">
-              <h2 className="text-3xl sm:text-4xl font-semibold">Philosophy</h2>
-              <p className="mt-4 text-neutral-600">
-                We combine minimalism, natural materials, and advanced technology to create homes that are warm,
-                functional, and energy‑efficient. Our focus lies on orientation, natural light, cross‑ventilation,
-                and build quality.
-              </p>
-            </div>
+      {/* Philosophy – ABOVE Projects */}
+      <Section id="philosophy" className="py-16 sm:py-20">
+        <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={fadeUp}>
+          <div className="max-w-2xl">
+            <h2 className="text-3xl sm:text-4xl font-semibold">Philosophy</h2>
+            <p className="mt-4 text-neutral-600">
+              We combine minimalism, natural materials and advanced technology to create homes that are warm,
+              functional and energy‑efficient. We focus on orientation, natural light, cross‑ventilation and build quality.
+            </p>
+          </div>
 
-            <div className="mt-10 grid md:grid-cols-3 gap-6">
-              {[
-                {
-                  title: 'Luxury Meets Sustainability',
-                  desc:
-                    'Premium aesthetics with sustainable choices — from insulation to windows and HVAC systems.',
-                },
-                {
-                  title: 'Pure Architecture',
-                  desc:
-                    'Balanced lines and harmonious proportions. Clean forms that highlight space and light.',
-                },
-                {
-                  title: 'Performance & Comfort',
-                  desc:
-                    'Net‑zero approaches, A+ energy ratings where possible, and smart design for low operating costs.',
-                },
-              ].map((f, i) => (
-                <div key={i} className="rounded-2xl p-6 bg-neutral-50 border border-neutral-200">
-                  <h3 className="text-xl font-medium">{f.title}</h3>
-                  <p className="mt-2 text-neutral-600">{f.desc}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+          <div className="mt-10 grid md:grid-cols-3 gap-6">
+            {[
+              {
+                title: 'Luxury Meets Sustainability',
+                desc:
+                  'Premium aesthetics with sustainable choices — from insulation to windows and HVAC systems.',
+              },
+              {
+                title: 'Pure Architecture',
+                desc:
+                  'Balanced lines and clean forms that highlight space and light.',
+              },
+              {
+                title: 'Performance & Comfort',
+                desc:
+                  'Net‑zero approaches, A+ energy ratings where possible, and smart design for low operating costs.',
+              },
+            ].map((f, i) => (
+              <div key={i} className="rounded-2xl p-6 bg-neutral-50 border border-neutral-200">
+                <h3 className="text-xl font-medium">{f.title}</h3>
+                <p className="mt-2 text-neutral-600">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </Section>
 
       {/* Projects */}
-      <section id="projects" className="py-16 sm:py-20">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={fadeUp}>
-            <div className="flex items-end justify-between gap-6">
-              <div>
-                <h2 className="text-3xl sm:text-4xl font-semibold">Projects</h2>
-                <p className="mt-4 text-neutral-600 max-w-2xl">
-                  Selected ongoing and completed projects. (Can link to dynamic /projects page.)
-                </p>
-              </div>
-              <Button asChild className="hidden md:inline-flex">
-                <a href="/projects">All Projects</a>
-              </Button>
+      <Section id="projects" className="py-16 sm:py-20">
+        <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={fadeUp}>
+          <div className="flex items-end justify-between gap-6">
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-semibold">Projects</h2>
+              <p className="mt-4 text-neutral-600 max-w-2xl">
+                Selected ongoing and completed projects. (Can link to dynamic /projects.)
+              </p>
             </div>
+            <Button asChild className="hidden md:inline-flex">
+              <a href="/en/projects">All Projects</a>
+            </Button>
+          </div>
 
-            <div className="mt-10 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {[1, 2, 3].map((i) => (
-                <article key={i} className="group rounded-2xl overflow-hidden border border-neutral-200 bg-white">
-                  <div className="aspect-[4/3] bg-neutral-100" />
-                  <div className="p-5">
-                    <h3 className="text-lg font-medium">MODEN Residence {i}</h3>
-                    <p className="mt-1 text-sm text-neutral-600">Location • Type • Stage</p>
-                    <div className="mt-4">
-                      <a href={`/projects/${i}`} className="inline-flex items-center gap-2 text-sm font-medium underline-offset-2 hover:underline">
-                        View details <ArrowRight className="w-4 h-4" />
-                      </a>
-                    </div>
+          <div className="mt-10 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {[1, 2, 3].map((i) => (
+              <article key={i} className="group rounded-2xl overflow-hidden border border-neutral-200 bg-white">
+                <div className="aspect-[4/3] bg-neutral-100" />
+                <div className="p-5">
+                  <h3 className="text-lg font-medium">MODEN Residence {i}</h3>
+                  <p className="mt-1 text-sm text-neutral-600">Location • Type • Stage</p>
+                  <div className="mt-4">
+                    <a href={`/en/projects/${i}`} className="inline-flex items-center gap-2 text-sm font-medium underline-offset-2 hover:underline">
+                      View details <ArrowRight className="w-4 h-4" />
+                    </a>
                   </div>
-                </article>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+                </div>
+              </article>
+            ))}
+          </div>
+        </motion.div>
+      </Section>
 
       {/* Sustainability */}
-      <section id="sustainability" className="py-16 sm:py-20">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={fadeUp}>
-            <h2 className="text-3xl sm:text-4xl font-semibold">Sustainability</h2>
-            <p className="mt-4 text-neutral-600 max-w-3xl">
-              From material selection to HVAC and photovoltaics, we design for low footprint and high performance.
-              Incorporating heat pumps, VRF/VRV, underfloor systems, heat recovery ventilation, and smart controls.
-            </p>
-            <div className="mt-8 grid md:grid-cols-3 gap-6">
-              {[
-                'A+ / NZEB target',
-                'Materials with Environmental Product Declarations (EPD)',
-                'Energy performance studies & consulting',
-              ].map((t, i) => (
-                <div key={i} className="rounded-2xl p-6 bg-neutral-50 border border-neutral-200 text-neutral-700">
-                  {t}
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <Section id="sustainability" className="py-16 sm:py-20">
+        <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={fadeUp}>
+          <h2 className="text-3xl sm:text-4xl font-semibold">Sustainability</h2>
+          <p className="mt-4 text-neutral-600 max-w-3xl">
+            From material selection to HVAC and photovoltaics, we design for low footprint and high performance.
+            Incorporating heat pumps, VRF/VRV, underfloor systems, heat recovery ventilation and smart controls.
+          </p>
+          <div className="mt-8 grid md:grid-cols-3 gap-6">
+            {[
+              'A+ / NZEB target',
+              'Materials with Environmental Product Declarations (EPD)',
+              'Energy performance studies & consulting',
+            ].map((t, i) => (
+              <div key={i} className="rounded-2xl p-6 bg-neutral-50 border border-neutral-200 text-neutral-700">
+                {t}
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </Section>
 
       {/* CTA */}
-      <section id="cta" className="py-16 sm:py-24">
-        <div className="container mx-auto px-4 max-w-5xl text-center">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={fadeUp}>
-            <h3 className="text-3xl sm:text-4xl font-semibold">Ready to design your next MODEN project?</h3>
-            <p className="mt-4 text-neutral-600">
-              Contact us for concept, preliminary design, and budget estimation. We deliver clear proposals with defined ranges.
-            </p>
-            <div className="mt-8 flex justify-center">
-              <Button asChild size="lg">
-                <a href="#contact">Book an intro call</a>
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <Section id="cta" className="py-16 sm:py-24">
+        <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }} variants={fadeUp}>
+          <h3 className="text-3xl sm:text-4xl font-semibold">Ready to design your next MODEN project?</h3>
+          <p className="mt-4 text-neutral-600">
+            Contact us for concept, preliminary design and budget estimation. We provide clear proposals with defined ranges.
+          </p>
+          <div className="mt-8 flex justify-center">
+            <Button asChild size="lg">
+              <a href="#contact">Book an intro call</a>
+            </Button>
+          </div>
+        </motion.div>
+      </Section>
 
       {/* Footer */}
       <footer id="contact" className="py-12 border-t border-neutral-200">
@@ -213,3 +203,4 @@ export default function Page() {
     </div>
   )
 }
+
