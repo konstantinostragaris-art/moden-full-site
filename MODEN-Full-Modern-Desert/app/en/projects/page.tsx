@@ -1,2 +1,41 @@
-import PageEL from '../../projects/page'
-export default PageEL
+// app/en/projects/page.tsx
+import Nav from '@/components/Nav'
+import Section from '@/components/Section'
+
+export const metadata = {
+  title: 'Projects — MODEN Development',
+}
+
+export default function Page() {
+  const items = [
+    ['Modern Desert Villa', 'Athens — A+'],
+    ['Ocean Stone Residence', 'Chalkidiki — A'],
+    ['Black & Brass Loft', 'Thessaloniki — A'],
+    ['Nordic Luxe Townhouse', 'Kifisia — A+'],
+    ['Terra Minimal Apartment', 'Glyfada — A'],
+  ]
+
+  return (
+    <div>
+      <Nav lang="en" />
+
+      <Section className="py-14">
+        <h1 className="text-3xl sm:text-4xl font-semibold mb-8">Projects</h1>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          {items.map((it, i) => (
+            <div key={i} className="card overflow-hidden">
+              <div className="aspect-[4/3] grid place-items-center bg-gradient-to-br from-desert-beige via-white to-desert-sand text-neutral-500">
+                Stock photo
+              </div>
+              <div className="p-5">
+                <div className="text-lg font-medium">{it[0]}</div>
+                <div className="text-sm text-neutral-500">{it[1]}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+    </div>
+  )
+}
