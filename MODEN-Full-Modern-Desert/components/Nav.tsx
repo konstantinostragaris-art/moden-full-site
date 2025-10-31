@@ -147,7 +147,7 @@ export default function Nav({ lang = 'el' }: { lang?: 'el' | 'en' }) {
             >
               {dict.switch}
             </button>
-
+<ThemeToggle />
             {underlineProps && (
               <motion.div
                 className="absolute bottom-0 h-[2px] bg-neutral-800 dark:bg-neutral-100 rounded-full"
