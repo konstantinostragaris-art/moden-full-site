@@ -6,7 +6,7 @@ const nextConfig = {
   i18n: {
     locales: ['el', 'en'], // Ελληνικά & Αγγλικά
     defaultLocale: 'el',   // Ελληνικά ως default
-    localeDetection: true, // Προαιρετικά: αναγνωρίζει γλώσσα browser
+    localeDetection: false, // Προαιρετικά: αναγνωρίζει γλώσσα browser
   },
 };
 
