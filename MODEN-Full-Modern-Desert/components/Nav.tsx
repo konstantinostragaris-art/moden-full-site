@@ -10,39 +10,43 @@ import { useRouter, usePathname } from 'next/navigation'
 import clsx from 'clsx'
 import { motion } from 'framer-motion'
 
-export default function Nav({ lang = 'el' }: { lang?: 'el' | 'en' }) {
+export default function Nav() {
   const router = useRouter()
-  const pathname = usePathname()
+  const pathname = usePathname() || '/'
+  const isEN = pathname.startsWith('/en')
+
   const [open, setOpen] = useState(false)
   const panelRef = useRef<HTMLDivElement>(null)
   const [underlineProps, setUnderlineProps] = useState<{ left: number; width: number } | null>(null)
   const navRef = useRef<HTMLDivElement>(null)
 
-  const dict =
-    lang === 'el'
-      ? {
-          home: 'Αρχική',
-          projects: 'Έργα',
-          philosophy: 'Φιλοσοφία',
-          contact: 'Επικοινωνία',
-          cta: 'Ζήτησε Πρόταση',
-          menu: 'Μενού',
-          close: 'Κλείσιμο',
-        }
-      : {
-          home: 'Home',
-          projects: 'Projects',
-          philosophy: 'Philosophy',
-          contact: 'Contact',
-          cta: 'Request a Proposal',
-          menu: 'Menu',
-          close: 'Close',
-        }
+  const dict = isEN
+    ? {
+        home: 'Home',
+        projects: 'Projects',
+        philosophy: 'Philosophy',
+        contact: 'Contact',
+        cta: 'Request a Proposal',
+        menu: 'Menu',
+        close: 'Close',
+      }
+    : {
+        home: 'Αρχική',
+        projects: 'Έργα',
+        philosophy: 'Φιλοσοφία',
+        contact: 'Επικοινωνία',
+        cta: 'Ζήτησε Πρόταση',
+        menu: 'Μενού',
+        close: 'Κλείσιμο',
+      }
 
   const go = (path: string) => {
     setOpen(false)
     router.push(path)
   }
+
+  // helper που φτιάχνει σωστά τα href ανάλογα με locale
+  const href = (elPath: string) => (isEN ? (elPath === '/' ? '/en' : `/en${elPath}`) : elPath)
 
   // close mobile με ESC / outside click
   useEffect(() => {
@@ -72,17 +76,16 @@ export default function Nav({ lang = 'el' }: { lang?: 'el' | 'en' }) {
     } else {
       setUnderlineProps(null)
     }
-  }, [pathname, lang])
+  }, [pathname, isEN])
 
-  const linkData = [
-    [dict.home, lang === 'el' ? '/' : '/en'],
-    [dict.projects, lang === 'el' ? '/projects' : '/en/projects'],
-    [dict.philosophy, lang === 'el' ? '/philosophy' : '/en/philosophy'],
-    [dict.contact, lang === 'el' ? '/contact' : '/en/contact'],
+  const linkData: Array<[string, string]> = [
+    [dict.home, href('/')],
+    [dict.projects, href('/projects')],
+    [dict.philosophy, href('/philosophy')],
+    [dict.contact, href('/contact')],
   ]
 
-  const isActive = (path: string) =>
-    pathname === path || pathname === `${path}/` || pathname === `/en${path}`
+  const isActive = (path: string) => pathname === path || pathname === `${path}/`
 
   return (
     <div className="sticky top-0 z-50 backdrop-blur bg-white/60 dark:bg-neutral-950/60 border-b border-neutral-200/60 dark:border-white/10">
@@ -105,16 +108,16 @@ export default function Nav({ lang = 'el' }: { lang?: 'el' | 'en' }) {
         {/* Desktop Navigation + Actions */}
         <div className="relative hidden md:flex items-center gap-3">
           <nav ref={navRef} className="flex items-center gap-6 text-sm relative">
-            {linkData.map(([label, href]) => (
+            {linkData.map(([label, h]) => (
               <button
-                key={href as string}
-                onClick={() => go(href as string)}
-                data-active={isActive(href as string)}
+                key={h}
+                onClick={() => go(h)}
+                data-active={isActive(h)}
                 className={clsx(
                   'relative transition-colors',
                   'text-neutral-600 hover:text-neutral-900',
                   'dark:text-neutral-300 dark:hover:text-neutral-100',
-                  isActive(href as string) && 'font-medium text-neutral-900 dark:text-neutral-100'
+                  isActive(h) && 'font-medium text-neutral-900 dark:text-neutral-100'
                 )}
               >
                 {label}
@@ -133,14 +136,11 @@ export default function Nav({ lang = 'el' }: { lang?: 'el' | 'en' }) {
           </nav>
 
           {/* CTA */}
-          <Button
-            onClick={() => go(lang === 'el' ? '/contact' : '/en/contact')}
-            className="shadow-sm"
-          >
+          <Button onClick={() => go(href('/contact'))} className="shadow-sm">
             {dict.cta}
           </Button>
 
-          {/* 👉 ΜΟΝΟ αυτός ο switcher μένει */}
+          {/* ΜΟΝΟ αυτός ο switcher (δίπλα στο CTA) */}
           <LangSwitch className="ml-2" />
 
           <ThemeToggle />
@@ -155,7 +155,7 @@ export default function Nav({ lang = 'el' }: { lang?: 'el' | 'en' }) {
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
-          <span className="sr-only">{open ? (lang === 'el' ? 'Κλείσιμο' : 'Close') : (lang === 'el' ? 'Μενού' : 'Menu')}</span>
+          <span className="sr-only">{open ? (isEN ? 'Close' : 'Κλείσιμο') : (isEN ? 'Menu' : 'Μενού')}</span>
           <span className={`block h-[2px] w-5 bg-current transition-transform ${open ? 'translate-y-[6px] rotate-45' : ''}`} />
           <span className={`block h-[2px] w-5 bg-current my-[5px] transition-opacity ${open ? 'opacity-0' : 'opacity-100'}`} />
           <span className={`block h-[2px] w-5 bg-current transition-transform ${open ? '-translate-y-[6px] -rotate-45' : ''}`} />
@@ -171,30 +171,26 @@ export default function Nav({ lang = 'el' }: { lang?: 'el' | 'en' }) {
                      border-neutral-200/60 dark:border-white/10"
         >
           <div className="px-4 py-3 grid gap-2 text-sm">
-            {linkData.map(([label, href]) => (
+            {linkData.map(([label, h]) => (
               <button
-                key={href as string}
-                onClick={() => go(href as string)}
+                key={h}
+                onClick={() => go(h)}
                 className={clsx(
                   'px-2 py-2 rounded-lg text-left hover:bg-neutral-100 text-neutral-600',
                   'dark:text-neutral-300 dark:hover:bg-white/5',
-                  isActive(href as string) && 'bg-neutral-100 text-neutral-900 font-medium dark:bg-white/10 dark:text-neutral-100'
+                  isActive(h) && 'bg-neutral-100 text-neutral-900 font-medium dark:bg-white/10 dark:text-neutral-100'
                 )}
               >
                 {label}
               </button>
             ))}
 
-            <Button
-              onClick={() => go(lang === 'el' ? '/contact' : '/en/contact')}
-              className="mt-2"
-            >
+            <Button onClick={() => go(href('/contact'))} className="mt-2">
               {dict.cta}
             </Button>
 
             <div className="pt-2 border-t mt-2 flex items-center justify-between border-neutral-200/60 dark:border-white/10">
               <span className="text-xs text-neutral-500 dark:text-neutral-400">Language</span>
-              {/* 👉 ίδιο component και στο mobile */}
               <LangSwitch />
             </div>
           </div>
