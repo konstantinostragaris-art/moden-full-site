@@ -1,4 +1,5 @@
 'use client'
+import Hero from '@/components/Hero'
 import { motion } from 'framer-motion'
 import Section from '@/components/Section'
 import Nav from '@/components/Nav'
@@ -6,7 +7,9 @@ import { Button } from '@/components/ui'
 
 export default function Page() {
   return (
+    
     <div className="min-h-screen">
+      <Hero />
       <Nav  />
 
       {/* Hero */}
