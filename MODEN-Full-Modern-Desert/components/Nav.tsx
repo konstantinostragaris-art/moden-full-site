@@ -1,6 +1,5 @@
 'use client'
-import  LangSwitch from '@/components/LangSwitch'
-
+import LangSwitch from '@/components/LangSwitch'
 import ThemeToggle from '@/components/ThemeToggle'
 
 import { useState, useEffect, useRef } from 'react'
@@ -27,7 +26,6 @@ export default function Nav({ lang = 'el' }: { lang?: 'el' | 'en' }) {
           philosophy: 'Φιλοσοφία',
           contact: 'Επικοινωνία',
           cta: 'Ζήτησε Πρόταση',
-          switch: 'EN',
           menu: 'Μενού',
           close: 'Κλείσιμο',
         }
@@ -37,7 +35,6 @@ export default function Nav({ lang = 'el' }: { lang?: 'el' | 'en' }) {
           philosophy: 'Philosophy',
           contact: 'Contact',
           cta: 'Request a Proposal',
-          switch: 'EL',
           menu: 'Menu',
           close: 'Close',
         }
@@ -45,16 +42,6 @@ export default function Nav({ lang = 'el' }: { lang?: 'el' | 'en' }) {
   const go = (path: string) => {
     setOpen(false)
     router.push(path)
-  }
-
-  // γράφει cookie προτίμησης και αλλάζει locale κρατώντας τη διαδρομή
-  const switchLang = () => {
-    const current = pathname || '/'
-    const isEnglish = current.startsWith('/en')
-    const target = isEnglish ? current.replace(/^\/en/, '') || '/' : `/en${current}`
-    document.cookie = `prefLocale=${isEnglish ? 'el' : 'en'}; path=/; max-age=${60 * 60 * 24 * 180}; SameSite=Lax`
-    setOpen(false)
-    window.location.assign(target)
   }
 
   // close mobile με ESC / outside click
@@ -111,13 +98,12 @@ export default function Nav({ lang = 'el' }: { lang?: 'el' | 'en' }) {
             </div>
             <div className="text-[11px] uppercase tracking-[0.18em] text-neutral-600 dark:text-neutral-300">
               Luxury Meets Sustainability
-           <LangSwitch />
             </div>
           </div>
         </div>
 
-        {/* Desktop Navigation */}
-        <div className="relative hidden md:block">
+        {/* Desktop Navigation + Actions */}
+        <div className="relative hidden md:flex items-center gap-3">
           <nav ref={navRef} className="flex items-center gap-6 text-sm relative">
             {linkData.map(([label, href]) => (
               <button
@@ -135,25 +121,9 @@ export default function Nav({ lang = 'el' }: { lang?: 'el' | 'en' }) {
               </button>
             ))}
 
-            <Button
-              onClick={() => go(lang === 'el' ? '/contact' : '/en/contact')}
-              className="shadow-sm"
-            >
-              {dict.cta}
-            </Button>
-
-            <button
-              onClick={switchLang}
-              className="text-xs ml-2 px-3 py-1 rounded-2xl border border-neutral-300 hover:bg-neutral-100 text-neutral-700 transition
-                         dark:border-white/15 dark:text-neutral-200 dark:hover:bg-white/5"
-              aria-label="Switch language"
-            >
-              {dict.switch}
-            </button>
-<ThemeToggle />
             {underlineProps && (
               <motion.div
-                className="absolute bottom-0 h-[2px] bg-neutral-800 dark:bg-neutral-100 rounded-full"
+                className="absolute -bottom-2 h-[2px] bg-neutral-800 dark:bg-neutral-100 rounded-full"
                 layout
                 initial={false}
                 animate={{ left: underlineProps.left, width: underlineProps.width }}
@@ -161,6 +131,19 @@ export default function Nav({ lang = 'el' }: { lang?: 'el' | 'en' }) {
               />
             )}
           </nav>
+
+          {/* CTA */}
+          <Button
+            onClick={() => go(lang === 'el' ? '/contact' : '/en/contact')}
+            className="shadow-sm"
+          >
+            {dict.cta}
+          </Button>
+
+          {/* 👉 ΜΟΝΟ αυτός ο switcher μένει */}
+          <LangSwitch className="ml-2" />
+
+          <ThemeToggle />
         </div>
 
         {/* Mobile Hamburger */}
@@ -211,13 +194,8 @@ export default function Nav({ lang = 'el' }: { lang?: 'el' | 'en' }) {
 
             <div className="pt-2 border-t mt-2 flex items-center justify-between border-neutral-200/60 dark:border-white/10">
               <span className="text-xs text-neutral-500 dark:text-neutral-400">Language</span>
-              <button
-                onClick={switchLang}
-                className="text-xs px-3 py-1 rounded-2xl border border-neutral-300 hover:bg-neutral-100 text-neutral-700 transition
-                           dark:border-white/15 dark:text-neutral-200 dark:hover:bg-white/5"
-              >
-                {dict.switch}
-              </button>
+              {/* 👉 ίδιο component και στο mobile */}
+              <LangSwitch />
             </div>
           </div>
         </div>
