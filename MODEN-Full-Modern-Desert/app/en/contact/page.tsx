@@ -1,5 +1,4 @@
 // app/en/contact/page.tsx
-'use client'
 import Nav from '@/components/Nav'
 import Section from '@/components/Section'
 import { Button } from '@/components/ui'
