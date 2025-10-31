@@ -19,7 +19,7 @@ export default function Nav() {
   const panelRef = useRef<HTMLDivElement>(null)
   const [underlineProps, setUnderlineProps] = useState<{ left: number; width: number } | null>(null)
   const navRef = useRef<HTMLDivElement>(null)
-
+const [elevated, setElevated] = useState(false)
   const dict = isEN
     ? {
         home: 'Home',
@@ -86,9 +86,21 @@ export default function Nav() {
   ]
 
   const isActive = (path: string) => pathname === path || pathname === `${path}/`
-
+useEffect(() => {
+  const onScroll = () => setElevated(window.scrollY > 4)
+  onScroll()
+  window.addEventListener('scroll', onScroll, { passive: true })
+  return () => window.removeEventListener('scroll', onScroll)
+}, [])
   return (
-    <div className="sticky top-0 z-50 backdrop-blur bg-white/60 dark:bg-neutral-950/60 border-b border-neutral-200/60 dark:border-white/10">
+  <header
+    className={clsx(
+      "sticky top-0 z-50 border-b backdrop-blur bg-white/60 dark:bg-neutral-950/60",
+      "supports-[backdrop-filter]:bg-white/50 dark:supports-[backdrop-filter]:bg-neutral-950/50",
+      "border-neutral-200/60 dark:border-white/10",
+      elevated && "shadow-sm"
+    )}
+  >
       {/* ΚΕΦΑΛΙΔΑ: αριστερά logo/τίτλος — δεξιά όλο το menu */}
       <Section className="py-3 flex items-center justify-between gap-4">
         {/* Left: Logo + Branding (ΜΕΓΑΛΥΤΕΡΑ) */}
@@ -163,6 +175,5 @@ export default function Nav() {
 
       {/* Mobile panel */}
       {/* (ίδιο όπως πριν) */}
-    </div>
-  )
+    </header>  )
 }
